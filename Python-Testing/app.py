@@ -15,7 +15,7 @@ def get_weather(city):
     if city in weather_data:
         return jsonify(weather_data[city])
     else:
-        return jsonify({'error':'City not found!!'})
+        return jsonify({'error':'City not found!!'}),404
     
 @app.route('/weather',methods=["POST"])
 def add_weather():
@@ -25,11 +25,11 @@ def add_weather():
     weather = data.get('weather')
 
     if city is None:
-        return jsonify({'error':'Incomplete Data'})
+        return jsonify({'error':'Incomplete Data'}),400
     elif temperature is None:
-        return jsonify({'error':'Incomplete Data'})
+        return jsonify({'error':'Incomplete Data'}),400
     elif weather is None:
-        return jsonify({'error':'Incomplete Data'})
+        return jsonify({'error':'Incomplete Data'}),400
     
     weather_data[city]={'temperature':temperature,'weather':weather}
     return jsonify({'msg':'Data Added Successfully!'})
@@ -37,7 +37,7 @@ def add_weather():
 @app.route('/weather/<string:city>', methods=['PUT'])
 def update_weather(city):
     if city not in weather_data:
-        return jsonify({'error': 'City not found'})
+        return jsonify({'error': 'City not found'}), 400
 
     data = request.get_json()
     temperature = data.get('temperature')
@@ -56,7 +56,7 @@ def delete_weather(city):
         del weather_data[city]
         return jsonify({'message': 'Weather data deleted successfully'})
     else:
-        return jsonify({'error': 'City not found'})
+        return jsonify({'error': 'City not found'}),400
     
 if __name__=='__main__':
     app.run()

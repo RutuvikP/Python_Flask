@@ -47,7 +47,7 @@ def test_update_weather(client):
     response=client.put(f'/weather/{city}',json=data)
 
     assert response.status_code == 200
-    assert response.json == {'msg': 'Data updated Successfully!'}
+    assert response.json == {'msg': 'Weather data updated successfully'}
 
 def test_update_weather_invalid(client):
     city = "nonExisting"
@@ -55,14 +55,14 @@ def test_update_weather_invalid(client):
     response=client.put(f'/weather/{city}')
 
     assert response.status_code == 400
-    assert response.json == {'error':'City not Found'}
+    assert response.json == {'error': 'City not found'}
 
 def test_delete_weather(client):
     city = "Latur"
     response=client.delete(f'/weather/{city}')
 
     assert response.status_code == 200
-    assert response.json == {'msg': 'City deleted Successfully!'}
+    assert response.json == {'message': 'Weather data deleted successfully'}
 
 def test_delete_weather_invalid(client):
     city = "nonExisting"
@@ -70,5 +70,5 @@ def test_delete_weather_invalid(client):
     response=client.delete(f'/weather/{city}')
 
     assert response.status_code == 400
-    assert response.json == {'error':'City not Found'}
+    assert response.json == {'error': 'City not found'}
 
